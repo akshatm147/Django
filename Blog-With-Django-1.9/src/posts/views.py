@@ -27,9 +27,9 @@ def post_list(request):
     return render(request, "index.html", context)
     # return HttpResponse("<h1>List</h1>")
 
-def post_detail(request):
+def post_detail(request, id=None):
     # instance = Post.objects.get(10)
-    instance = get_object_or_404(Post, id=2)
+    instance = get_object_or_404(Post, id=id)
     context = {
         "title" : instance.title,
         "instance" : instance,
