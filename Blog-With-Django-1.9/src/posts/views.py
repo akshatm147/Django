@@ -1,11 +1,28 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
+from .forms import PostForm
 from .models import Post
 
 def post_create(request):
-    return HttpResponse("<h1>Create</h1>")
+    form = PostForm(request.POST or None)
+
+    context = {
+        "form": form,
+    }
+
+    if form.is_valid():
+        instance = form.save(commit=False)
+        print(form.cleaned_data.get("title"))
+        instance.save()
+
+    # if request.method == 'POST':
+    #     print(request.POST.get("title"))
+    #     title = request.POST.get("title")
+    #     print(request.POST.get("content"))
+    #     Post.objects.create(title=title)
+
+    return render(request, "post_form.html", context)
 
 def post_list(request):
     queryset = Post.objects.all()
