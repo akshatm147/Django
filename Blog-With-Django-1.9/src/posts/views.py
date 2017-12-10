@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
 from .forms import PostForm
@@ -78,5 +78,8 @@ def post_update(request, id=None):
 
     return render(request, "post_update.html", context)
 
-def post_delete(request):
-    return HttpResponse("<h1>Delete</h1>")
+def post_delete(request, id=None):
+    instance = get_object_or_404(Post, id=id)
+    instance.delete()
+    messages.success(request, "Post Deleted Successfully")
+    return redirect("posts:list")
