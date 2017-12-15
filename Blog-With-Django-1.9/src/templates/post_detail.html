@@ -9,6 +9,10 @@
 <div class="col-sm-6 col-sm-offset-3" >
   <h1>{{ title }} <small>{{ instance.timestamp }}<small></h1>
 
+  {% if instance.image %}
+  <img src="{{ instance.image.url }}" class="img-responsive"/>
+  {% endif %}
+
   {{ instance.content | linebreaks }} <br />
 
 </div>

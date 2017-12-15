@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
@@ -6,11 +7,7 @@ from .forms import PostForm
 from .models import Post
 
 def post_create(request):
-    form = PostForm(request.POST or None)
-
-    context = {
-        "form": form,
-    }
+    form = PostForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         instance = form.save(commit=False)
@@ -18,6 +15,10 @@ def post_create(request):
         instance.save()
         messages.success(request, "Successfully Created")
         return HttpResponseRedirect(instance.get_absolute_url())
+
+    context = {
+        "form": form,
+    }
 
     # if request.method == 'POST':
     #     print(request.POST.get("title"))
@@ -28,11 +29,25 @@ def post_create(request):
     return render(request, "post_form.html", context)
 
 def post_list(request):
-    queryset = Post.objects.all()
+    queryset_list = Post.objects.all() #.order_by("-timestamp")
+
+    paginator = Paginator(queryset_list, 5) # Show 25 queryset_list per page
+
+    page_request_var = 'page'
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        queryset = paginator.page(paginator.num_pages)
 
     context = {
         "object_list" : queryset,
-        "title" : "List"
+        "title" : "List",
+        "page_request_var" : page_request_var
     }
 
     # if request.user.is_authenticated():
@@ -61,7 +76,7 @@ def post_detail(request, id=None):
 def post_update(request, id=None):
     instance = get_object_or_404(Post, id=id)
 
-    form = PostForm(request.POST or None, instance=instance)
+    form = PostForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
