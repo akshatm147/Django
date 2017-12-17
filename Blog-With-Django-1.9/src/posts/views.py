@@ -81,7 +81,7 @@ def post_detail(request, slug=None):
     return render(request, "post_detail.html", context)
     # return HttpResponse("<h1>Detail</h1>")
 
-def post_update(request, id=None):
+def post_update(request, slug=None):
     if not request.user.is_staff or not request.user.is_superuser or not request.user.is_authenticated():
         raise Http404
 
