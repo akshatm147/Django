@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.utils import timezone
 
 from .forms import PostForm
 from .models import Post
@@ -35,6 +36,8 @@ def post_create(request):
     return render(request, "post_form.html", context)
 
 def post_list(request):
+    today = timezone.now().date()
+
     queryset_list = Post.objects.all() #.order_by("-timestamp")
 
     paginator = Paginator(queryset_list, 5) # Show 25 queryset_list per page
@@ -53,7 +56,8 @@ def post_list(request):
     context = {
         "object_list" : queryset,
         "title" : "List",
-        "page_request_var" : page_request_var
+        "page_request_var" : page_request_var,
+        "today" : today,
     }
 
     # if request.user.is_authenticated():
@@ -71,6 +75,11 @@ def post_list(request):
 def post_detail(request, slug=None):
     # instance = Post.objects.get(10)
     instance = get_object_or_404(Post, slug=slug)
+
+    if instance.publish > timezone.now().date() or instance.draft:
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
+
     share_string = quote_plus(instance.content)
     context = {
         "title" : instance.title,

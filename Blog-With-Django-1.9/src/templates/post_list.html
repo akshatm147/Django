@@ -11,6 +11,8 @@
   <div class="col-sm-12">
     <div class="thumbnail">
       <div class="caption">
+        {% if obj.draft %}<h3 style="color: red;">Draft</h3>{% endif %}
+        {% if obj.publish > today %}<h3>Future Post</h3>{% endif %}
         <h3>
           <a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a>
           <small>{{ obj.publish }}</small>
