@@ -18,6 +18,11 @@
         {% if obj.image %}
         <img src="{{ obj.image.url }}" class="img-responsive"/>
         {% endif %}
+
+        {% if obj.user.get_full_name %}
+        <p>Author: {{ obj.user.get_full_name }}</p>
+        {% endif %}
+
         <p>
           {{ obj.content | linebreaks | truncatechars:75 }} <br /> <br />
           Updated : {{ obj.updated }}

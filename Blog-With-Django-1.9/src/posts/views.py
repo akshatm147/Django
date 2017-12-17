@@ -9,13 +9,14 @@ from .forms import PostForm
 from .models import Post
 
 def post_create(request):
-    if not request.user.is_staff or not request.user.is_superuser:
+    if not request.user.is_staff or not request.user.is_superuser or not request.user.is_authenticated():
         raise Http404
 
     form = PostForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         instance = form.save(commit=False)
+        instance.user = request.user
         # print(form.cleaned_data.get("title"))
         instance.save()
         messages.success(request, "Successfully Created")
@@ -81,7 +82,7 @@ def post_detail(request, slug=None):
     # return HttpResponse("<h1>Detail</h1>")
 
 def post_update(request, id=None):
-    if not request.user.is_staff or not request.user.is_superuser:
+    if not request.user.is_staff or not request.user.is_superuser or not request.user.is_authenticated():
         raise Http404
 
     instance = get_object_or_404(Post, slug=slug)
@@ -102,9 +103,9 @@ def post_update(request, id=None):
     return render(request, "post_update.html", context)
 
 def post_delete(request, slug=None):
-    if not request.user.is_staff or not request.user.is_superuser:
+    if not request.user.is_staff or not request.user.is_superuser or not request.user.is_authenticated():
         raise Http404
-    
+
     instance = get_object_or_404(Post, slug=slug)
     instance.delete()
     messages.success(request, "Post Deleted Successfully")
