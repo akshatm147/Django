@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
 from .utils import code_generator, create_shortcode
+
+SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 20)
 
 class MyUrlManager(models.Manager):
     def all(self, *args, **kwargs):
@@ -10,7 +13,7 @@ class MyUrlManager(models.Manager):
         return qs
 
     def refresh_shortcode(self, items=None):
-        qs = MyUrl.objects.all()
+        qs = MyUrl.objects.filter(id__gte=1)
         if items is not None and isinstance(items, int):
             qs = qs.order_by('-id')[:items]
         new_codes = 0
@@ -23,7 +26,7 @@ class MyUrlManager(models.Manager):
 
 class MyUrl(models.Model):
     url = models.CharField(max_length=220, )
-    shortcode = models.CharField(max_length=20, unique=True, null=False, blank=True)
+    shortcode = models.CharField(max_length=SHORTCODE_MAX, unique=True, null=False, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
