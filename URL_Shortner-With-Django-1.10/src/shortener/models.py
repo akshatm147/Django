@@ -8,7 +8,7 @@ SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 20)
 
 class MyUrlManager(models.Manager):
     def all(self, *args, **kwargs):
-        qs_main = super(MyUrl, self).all(*args, **kwargs)
+        qs_main = super().all(*args, **kwargs)
         qs = qs_main.filter(active=True)
         return qs
 

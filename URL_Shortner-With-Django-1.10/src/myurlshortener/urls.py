@@ -20,6 +20,6 @@ from shortener.views import my_redirect_view, MyCBView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^view-1/$', my_redirect_view),
-    url(r'^view-2/$', MyCBView.as_view()),
+    url(r'^a/(?P<shortcode>[\w-]+)/$', my_redirect_view),
+    url(r'^b/(?P<shortcode>[\w-]+)/$', MyCBView.as_view()),
 ]
