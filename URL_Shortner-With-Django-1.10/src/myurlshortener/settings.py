@@ -25,7 +25,7 @@ SECRET_KEY = 'yh=$ol9@9a)oqw%g(!cp*)bw_mn$bmj&0kggmtfbkc=sq=jh43'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tirr.com', 'www.tirr.com', 'www.shortner.co', 'shortner.co']
 
 
 # Application definition
