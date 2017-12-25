@@ -3,12 +3,35 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 from .models import MyUrl
+from .forms import SubmitUrlForm
 
 # Create your views here.
 
+def home_view_fbv(request, *args, **kwargs):
+    if request.method== 'POST':
+        print(request.POST)
+    return render(request, "shortener/home.html", {})
+
 class HomeView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, "shortener/home.html", {})
+        the_form = SubmitUrlForm()
+        context = {
+            "title" : "My URL Shortener",
+            "form" : the_form
+        }
+        return render(request, "shortener/home.html", context)
+
+    def post(self, request, *args, **kwargs):
+        form = SubmitUrlForm(request.POST)
+
+        if form.is_valid():
+            print(form.cleaned_data)
+
+        context = {
+            "title" : "My URL Shortener",
+            "form" : form
+        }
+        return render(request, "shortener/home.html", context)
 
 
 class MyCBView(View): #class based view

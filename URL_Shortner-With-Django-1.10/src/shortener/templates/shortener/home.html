@@ -1,1 +1,12 @@
-<h1> Hi There </h1>
+<div style="width: 800px; margin: 0 auto;">
+
+  <h1> {{ title }} </h1>
+
+  <form method="post" action=".">
+    {% csrf_token %}
+    <!-- <input type="text" name="url" placeholder="Shorten your URL" /> <br /> -->
+    {{ form.as_p }}
+    <input type="submit" value="Shorten" />
+  </form>
+
+</div>
