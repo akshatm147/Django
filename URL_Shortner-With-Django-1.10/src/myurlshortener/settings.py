@@ -25,7 +25,7 @@ SECRET_KEY = 'yh=$ol9@9a)oqw%g(!cp*)bw_mn$bmj&0kggmtfbkc=sq=jh43'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tirr.com', 'www.tirr.com', 'www.shortner.co', 'shortner.co']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tirr.com', 'www.tirr.com', 'www.myurlshortener.co', 'myurlshortener.co']
 
 
 # Application definition
@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_hosts',
     'shortener',
 ]
 
 MIDDLEWARE_CLASSES = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,9 +51,13 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'myurlshortener.urls'
+ROOT_HOSTCONF = 'myurlshortener.hosts'
+DEFAULT_HOST = 'www'
+DEFAULT_REDIRECT_URL = "http://www.tirr.com:8000"
 
 TEMPLATES = [
     {
