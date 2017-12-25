@@ -16,10 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from shortener.views import my_redirect_view, MyCBView
+from shortener.views import MyCBView, HomeView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^(?P<shortcode>[\w-]+)/$', my_redirect_view),
-    url(r'^b/(?P<shortcode>[\w-]+)/$', MyCBView.as_view()),
+    url(r'^',HomeView.as_view()),
+    url(r'^(?P<shortcode>[\w-]+)/$', MyCBView.as_view()),
 ]
