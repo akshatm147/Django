@@ -25,7 +25,7 @@ SECRET_KEY = 'yh=$ol9@9a)oqw%g(!cp*)bw_mn$bmj&0kggmtfbkc=sq=jh43'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tirr.com', 'www.tirr.com', 'www.myurlshortener.co', 'myurlshortener.co']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'akshatsurl.com', 'www.akshatsurl.com', 'www.myurlshortener.co', 'myurlshortener.co']
 
 
 # Application definition
@@ -57,7 +57,7 @@ MIDDLEWARE_CLASSES = [
 ROOT_URLCONF = 'myurlshortener.urls'
 ROOT_HOSTCONF = 'myurlshortener.hosts'
 DEFAULT_HOST = 'www'
-DEFAULT_REDIRECT_URL = "http://www.tirr.com:8000"
+DEFAULT_REDIRECT_URL = "http://www.akshatsurl.com:8080"
 
 TEMPLATES = [
     {
