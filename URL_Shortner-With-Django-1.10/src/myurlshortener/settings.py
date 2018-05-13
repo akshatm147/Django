@@ -57,7 +57,7 @@ MIDDLEWARE_CLASSES = [
 ROOT_URLCONF = 'myurlshortener.urls'
 ROOT_HOSTCONF = 'myurlshortener.hosts'
 DEFAULT_HOST = 'www'
-DEFAULT_REDIRECT_URL = "http://www.akshatsurl.com:8080"
+DEFAULT_REDIRECT_URL = "http://www.akshatsurl.com:8000"
 
 TEMPLATES = [
     {

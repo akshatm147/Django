@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 from .utils import code_generator, create_shortcode
+from .validators import validate_url, validate_dot_com
 
 SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 20)
 
@@ -25,7 +26,7 @@ class MyUrlManager(models.Manager):
         return "New codes made: {i}".format(i = new_codes)
 
 class MyUrl(models.Model):
-    url = models.CharField(max_length=220, )
+    url = models.CharField(max_length=220, validators=[validate_url, validate_dot_com])
     shortcode = models.CharField(max_length=SHORTCODE_MAX, unique=True, null=False, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
