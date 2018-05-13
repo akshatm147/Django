@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # third party
     'django_hosts',
+
+    # custom apps
+    'analytics',
     'shortener',
 ]
 
@@ -58,6 +63,7 @@ ROOT_URLCONF = 'myurlshortener.urls'
 ROOT_HOSTCONF = 'myurlshortener.hosts'
 DEFAULT_HOST = 'www'
 DEFAULT_REDIRECT_URL = "http://www.akshatsurl.com:8000"
+PARENT_HOST = "akshatsurl.com:8000"
 
 TEMPLATES = [
     {

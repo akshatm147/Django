@@ -2,6 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
+from analytics.models import ClickEvent
+
 from .models import MyUrl
 from .forms import SubmitUrlForm
 
@@ -46,9 +48,11 @@ class HomeView(View):
         return render(request, template, context)
 
 
-class MyCBView(View): #class based view
+class URLRedirectView(View):
     def get(self, request, shortcode=None, *args, **kwargs):
         obj = get_object_or_404(MyUrl, shortcode=shortcode)
+        # save item
+        print(ClickEvent.objects.create_event(obj))
         return HttpResponseRedirect(obj.url)
 
 
