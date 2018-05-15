@@ -6,7 +6,7 @@ from .validators import validate_url, validate_dot_com
 class SubmitUrlForm(forms.Form):
     url = forms.CharField(
                 label='',
-                validators=[validate_url],
+                validators=[validate_url, validate_dot_com],
                 widget = forms.TextInput(
                     attrs = {
                         "placeholder": "Long URL",
@@ -30,13 +30,8 @@ class SubmitUrlForm(forms.Form):
     #     return url
     #
     # def clean_url(self):
-        # url = self.cleaned_data['url']
-    #     print(url)
-    #     url_validator = URLValidator()
+    #     url = self.cleaned_data['url']
     #
-    #     try:
-    #         url_validator(url)
-    #     except:
-    #         raise forms.ValidationError("Invalid URL for this field")
-
-        # return url
+    #     if "http" in url:
+    #         return url
+    #     return "http://" + url
